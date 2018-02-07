@@ -58,5 +58,5 @@ apps/support/migrations
 
 # npm
 src/node_modules
-
+db.sqlite3
 static_files/
