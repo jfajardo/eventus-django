@@ -1,3 +1,4 @@
 Django==2.0
 djoser==0.5.4
+djangorestframework==3.7.4
 Pillow==5.0.0
