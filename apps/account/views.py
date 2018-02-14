@@ -1,8 +1,10 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from django.core.files.base import ContentFile
 from .models import *
+from .serializers import *
 import string
 import random
 import base64
@@ -33,3 +35,13 @@ class UpdateAvatar(APIView):
             return Response({'actualizado': True})
         except Exception as e:
             return Response({'actualizado': False})
+
+
+class EventosList(ListAPIView):
+    serializer_class = EventoMinSerializer
+    permission_classes = (AllowAny,)
+    pagination_class = None
+
+    def get_queryset(self):
+        eventos = Evento.objects.all()
+        return eventos

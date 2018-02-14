@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-
+import datetime
 
 class UserManager(BaseUserManager, models.Manager):
     def _create_user(self, username, email, first_name, last_name, password,
@@ -61,3 +61,18 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.username
         else:
             return self.first_name + ' ' + self.last_name
+
+
+class Evento(models.Model):
+    nombre = models.CharField(blank=False, max_length=100)
+    fecha = models.DateTimeField(blank=True, default=datetime.datetime.now)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='eventos')
+    direccion = models.CharField(blank=True, max_length=100)
+    observaciones = models.TextField(blank=True)
+    latitud = models.FloatField()
+    longitud = models.FloatField()
+    imagen = models.ImageField(upload_to='eventos',
+                               default='eventos/no_foto.png', blank=True)
+
+    def __unicode__(self):
+        return self.nombre
