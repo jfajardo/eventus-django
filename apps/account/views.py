@@ -45,3 +45,25 @@ class EventosList(ListAPIView):
     def get_queryset(self):
         eventos = Evento.objects.all()
         return eventos
+
+
+class EventoView(APIView):
+
+    def post(self, request):
+        try:
+            request.data['usuario'] = request.user.id
+            request.data['latitud'] = 0
+            request.data['longitud'] = 0
+            serializer = EventoSerializer(data=request.data)
+            if serializer.is_valid():
+                evento = serializer.save()
+                print(evento)
+                image_data = base64.b64decode(request.data['imagen'])
+                evento.imagen = ContentFile(image_data, '{0}.jpg'.format(request.user))
+                evento.save()
+                print(serializer.errors)
+                evento_s = EventoMinSerializer(evento, many=False)
+                return Response(evento_s.data)
+        except Exception as e:
+            print(e)
+            return Response({'agregado': False})

@@ -13,3 +13,9 @@ class EventoMinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evento
         fields = ('id', 'nombre', 'observaciones', 'fecha', 'imagen', 'usuario')
+
+
+class EventoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evento
+        exclude = ('imagen', )
