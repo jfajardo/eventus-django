@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^cambiar-foto$', UpdateAvatar.as_view()),
     url(r'^eventos$', EventosList.as_view()),
     url(r'^evento$', EventoView.as_view()),
+    url(r'^evento/(?P<id>[0-9])$', EventoDeleteView.as_view()),
 ]

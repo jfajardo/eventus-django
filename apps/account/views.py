@@ -67,3 +67,14 @@ class EventoView(APIView):
         except Exception as e:
             print(e)
             return Response({'agregado': False})
+
+
+class EventoDeleteView(APIView):
+
+    def delete(self, request, id):
+        try:
+            Evento.objects.get(id=id, usuario=request.user).delete()
+            return Response({'eliminado': True})
+        except Exception as e:
+            print(e)
+            return Response({'eliminado': False})
